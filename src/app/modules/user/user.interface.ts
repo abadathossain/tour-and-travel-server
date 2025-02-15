@@ -3,6 +3,6 @@ export type IUser = {
   email: string;
   age: number;
   photo?: string; // Optional field
-  role: string;
-  userStatus: string;
+  role: "user" | "admin";
+  userStatus: "active" | "inactive";
 };
