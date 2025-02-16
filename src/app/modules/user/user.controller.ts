@@ -36,8 +36,67 @@ const getAllUser = async (req: Request, res: Response) => {
     });
   }
 };
+const getSingleUser = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.userId;
+    const result = await userServices.getSingleUserFromDB(userId);
+    res.status(200).json({
+      status: true,
+      message: "User single read successfully",
+      data: result,
+    });
+  } catch (error) {
+    // console.log(err);
+    res.json({
+      status: false,
+      message: "User single read failed",
+      error,
+    });
+  }
+};
+const getUpdateUser = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.userId;
+    const updateData = req.body;
+    const result = await userServices.getUpdateUserFromDB(userId, updateData);
+    res.status(200).json({
+      status: true,
+      message: "User update successfully",
+      data: result,
+    });
+  } catch (error) {
+    // console.log(err);
+    res.json({
+      status: false,
+      message: "Use rupdate failed",
+      error,
+    });
+  }
+};
+
+const deleteUser = async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.userId;
+    const result = await userServices.deleteUserFromDB(userId);
+    res.status(200).json({
+      status: true,
+      message: "User single delete successfully",
+      data: result,
+    });
+  } catch (error) {
+    // console.log(err);
+    res.json({
+      status: false,
+      message: "User single delete failed",
+      error,
+    });
+  }
+};
 
 export const userControllers = {
   createUser,
   getAllUser,
+  getSingleUser,
+  getUpdateUser,
+  deleteUser,
 };
