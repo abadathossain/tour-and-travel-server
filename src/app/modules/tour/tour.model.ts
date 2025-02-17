@@ -1,8 +1,7 @@
 import { model, Schema } from "mongoose";
-import { ITour } from "./tour.interface";
-import e from "express";
+import ITourModel, { ITour, ITourMethods } from "./tour.interface";
 
-const tourSchema = new Schema<ITour>({
+const tourSchema = new Schema<ITour, ITourModel, ITourMethods>({
   name: {
     type: String,
     required: true,
@@ -26,7 +25,7 @@ const tourSchema = new Schema<ITour>({
   locations: [String],
   slug: String,
 });
-tourSchema.methods.getNextTour = function () {
+tourSchema.methods.getNextNearestStartDateAndEndData = function () {
   const today = new Date();
   const nextTour = this.startDates.filter((startDate: Date) => {
     return startDate > today;
@@ -45,4 +44,4 @@ tourSchema.methods.getNextTour = function () {
   };
 };
 
-export const Tour = model<ITour>("Tour", tourSchema);
+export const Tour = model<ITour, ITourModel>("Tour", tourSchema);

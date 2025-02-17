@@ -1,3 +1,5 @@
+import { Model } from "mongoose";
+
 export interface ITour {
   name: string;
   durationHours: number;
@@ -10,3 +12,12 @@ export interface ITour {
   locations: string[];
   slug: string;
 }
+export interface ITourMethods {
+  getNextNearestStartDateAndEndData(): {
+    nearestStartDate: Date | null;
+    estimatedEndDate: Date | null;
+  };
+}
+
+type ITourModel = Model<ITour, Record<string, unknown>, ITourMethods>;
+export default ITourModel;

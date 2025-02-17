@@ -32,10 +32,17 @@ const deleteTour = async (id: string) => {
   return result;
 };
 
+const getNextScheduledTour = async (id: string) => {
+  const tour = await Tour.findById(id);
+  const nextSchedule = tour?.getNextTour();
+  return nextSchedule;
+};
+
 export const tourService = {
   createTour,
   getTours,
   getSingleTour,
   updateTour,
   deleteTour,
+  getNextScheduledTour,
 };
