@@ -1,7 +1,12 @@
-import express from "express";
-import { tourControllers } from "./tour.controller";
+import { Router } from "express";
+import { tourController } from "./tour.controller";
 
-const router = express.Router();
-router.post("/create-tour", tourControllers.createTour);
+const tourRouter = Router();
 
-export const tourRoutes = router;
+tourRouter.get("/:id", tourController.getSingleTour);
+tourRouter.get("/", tourController.getTours);
+tourRouter.post("/", tourController.createTour);
+tourRouter.put("/:id", tourController.updateTour);
+tourRouter.delete("/:id", tourController.deleteTour);
+
+export default tourRouter;

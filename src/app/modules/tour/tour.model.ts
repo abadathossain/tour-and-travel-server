@@ -1,5 +1,6 @@
 import { model, Schema } from "mongoose";
 import { ITour } from "./tour.interface";
+import e from "express";
 
 const tourSchema = new Schema<ITour>({
   name: {
@@ -25,4 +26,23 @@ const tourSchema = new Schema<ITour>({
   locations: [String],
   slug: String,
 });
-export const tourModel = model<ITour>("Tour", tourSchema);
+tourSchema.methods.getNextTour = function () {
+  const today = new Date();
+  const nextTour = this.startDates.filter((startDate: Date) => {
+    return startDate > today;
+  });
+  nextTour.sort((a: Date, b: Date) => {
+    return a.getTime() - b.getTime();
+  });
+  const nextTourDate = nextTour[0];
+  const estimatedTime = new Date(
+    nextTourDate.getTime() + this.durationHours * 60 * 60 * 1000
+  );
+
+  return {
+    nextTourDate,
+    estimatedTime,
+  };
+};
+
+export const Tour = model<ITour>("Tour", tourSchema);

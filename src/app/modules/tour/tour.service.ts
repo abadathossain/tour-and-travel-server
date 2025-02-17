@@ -1,29 +1,41 @@
 import { ITour } from "./tour.interface";
-import { tourModel } from "./tour.model";
+import { Tour } from "./tour.model";
 
-const createTourIntoDB = async (tour: ITour) => {
-  const result = await tourModel.create(tour);
+const createTour = async (payload: ITour) => {
+  //   const result = await Tour.create(payload)
+
+  const data = new Tour(payload);
+
+  //   data.color = "red"
+
+  const result = await data.save();
   return result;
 };
-// const getAllUserFromDB = async () => {
-//   const result = await tourModel.find();
-//   return result;
-// };
-// const getSingleUserFromDB = async (id: string) => {
-//   const result = await tourModel.findById(id);
-//   return result;
-// };
-// const getUpdateUserFromDB = async (id: string, updateData: Partial<IUser>) => {
-//   const result = await tourModel.findByIdAndUpdate(id, updateData, {
-//     new: true,
-//   });
-//   return result;
-// };
-// const deleteUserFromDB = async (id: string) => {
-//   const result = await tourModel.findByIdAndDelete(id);
-//   return result;
-// };
 
-export const tourServices = {
-  createTourIntoDB,
+const getTours = async () => {
+  const result = Tour.find();
+  return result;
+};
+
+const getSingleTour = async (id: string) => {
+  const result = Tour.findById(id);
+  return result;
+};
+
+const updateTour = async (id: string, payload: Partial<ITour>) => {
+  const result = Tour.findByIdAndUpdate(id, payload);
+  return result;
+};
+
+const deleteTour = async (id: string) => {
+  const result = Tour.findByIdAndDelete(id);
+  return result;
+};
+
+export const tourService = {
+  createTour,
+  getTours,
+  getSingleTour,
+  updateTour,
+  deleteTour,
 };
