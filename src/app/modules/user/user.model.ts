@@ -38,4 +38,18 @@ const userSchema = new Schema<IUser>({
     default: "active",
   },
 });
+
+// hook -> pre
+userSchema.pre("find", function (this, next) {
+  this.find({ userStatus: { $eq: "inactive" } });
+  next();
+});
+
+// hook -> post
+userSchema.post("find", function (docs, next) {
+  docs.forEach((doc: IUser) => {
+    doc.name = doc.name.toLowerCase();
+  });
+  next();
+});
 export const userModel = model<IUser>("User", userSchema);
