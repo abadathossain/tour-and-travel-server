@@ -25,6 +25,8 @@ const tourSchema = new Schema<ITour, ITourModel, ITourMethods>({
   locations: [String],
   slug: String,
 });
+
+// tour schema methods
 tourSchema.methods.getNextNearestStartDateAndEndData = function () {
   const today = new Date();
   const nextTour = this.startDates.filter((startDate: Date) => {
